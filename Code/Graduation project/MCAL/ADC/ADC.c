@@ -1,0 +1,32 @@
+/*
+ * ADC.c
+ *
+ *  Author: Mostafa Ayman
+ */ 
+#include "ADC.h"
+
+void ADC_INIT(void){
+	//VOLTAGE REFERANCE
+	CLR_BIT(ADMUX,7);
+	SET_BIT(ADMUX,6);
+	/*_TO_SELECT_CHANNEL_1_*/
+	SET_BIT(ADMUX,0);
+	CLR_BIT(ADMUX,1);
+	CLR_BIT(ADMUX,2);
+	CLR_BIT(ADMUX,3);
+	CLR_BIT(ADMUX,4);
+	//prescaler-128
+	SET_BIT(ADCSRA,0);
+	SET_BIT(ADCSRA,1);
+	SET_BIT(ADCSRA,2);
+	//enable ADC
+	SET_BIT(ADCSRA,7);
+	//AUTO TRIGGER
+	SET_BIT(ADCSRA,5);
+	
+}
+uint16 ADC_READ(void){
+	SET_BIT(ADCSRA,6);
+	while(GET_BIT(ADCSRA,4)==0){}
+		return ADC_VALUE;
+}
